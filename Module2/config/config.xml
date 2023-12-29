@@ -1,0 +1,9 @@
+<config>
+  <data_dir>./MLData</data_dir>
+  <model_dir>./MLProjects</model_dir>
+  <model_config>
+    <max_depth>30</max_depth>
+    <min_samples_leaf>2</min_samples_leaf>
+    <min_samples_split>3</min_samples_split>
+  </model_config>
+</config>

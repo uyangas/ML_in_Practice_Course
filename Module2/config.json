@@ -1,6 +1,6 @@
 {
-  "DATA_DIR": "/Users/uyangajung/MLData",
-  "MODEL_DIR": "/Users/uyangajung/MLProjects",
+  "DATA_DIR": "./MLData",
+  "MODEL_DIR": "./MLProjects",
   "DATA_COLUMNS": {
     "X_COLUMNS": ["playlist_genre", "playlist_subgenre","danceability", "energy", "key", 
     "loudness", "mode", "speechiness","acousticness", "instrumentalness", 
