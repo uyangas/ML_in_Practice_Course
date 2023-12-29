@@ -1,0 +1,15 @@
+{
+  "DATA_DIR": "/Users/uyangajung/MLData",
+  "MODEL_DIR": "/Users/uyangajung/MLProjects",
+  "DATA_COLUMNS": {
+    "X_COLUMNS": ["playlist_genre", "playlist_subgenre","danceability", "energy", "key", 
+    "loudness", "mode", "speechiness","acousticness", "instrumentalness", 
+    "liveness", "valence", "tempo", "duration_ms"],
+    "Y_COLUMN": "track_popularity"
+  },
+  "MODEL_CONFIG": {
+    "MAX_DEPTH": 30,
+    "MIN_SAMPLES_LEAF": 2,
+    "MIN_SAMPLES_SPLIT": 3
+  }
+}
