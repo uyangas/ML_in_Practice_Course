@@ -4,13 +4,10 @@ import argparse
 import pickle
 import os
 
-from sklearn.ensemble import RandomForestClassifier
+with open('./Module3/config.json', 'r') as file:
+    config_json = json.load(file)
 
-X_columns = ['playlist_genre', 'playlist_subgenre','danceability', 'energy', 
-                  'key', 'loudness', 'mode', 'speechiness','acousticness', 
-                  'instrumentalness', 'liveness', 'valence', 'tempo', 'duration_ms']
-y_column = 'track_popularity'
-local_data_dir = "./Module3/Data"
+local_data_dir = config_json['LOCAL_DATA_DIR']
 
 # Өгөгдөл хадгалах folder нээх
 if not os.path.exists(local_data_dir):
@@ -22,11 +19,10 @@ else:
 def load_spotify_data():
     import pandas as pd
 
-    DATA_PATH = os.getenv('DATA_DIR')
+    DATA_PATH = config_json['DATA_DIR']
     df = pd.read_csv(os.path.join(DATA_PATH, 'Spotify/spotify_songs.csv'))
     
     return df
-
 
 # өгөгдлийг сургалтын, тестийн гэж хуваах
 def split_data(X, y, test_size=0.3):
@@ -59,7 +55,7 @@ def scale_process_data(df, scale='MinMax'):
     elif scale == 'Standard':
         scaler = StandardScaler()
 
-    X_train, X_test, y_train, y_test = split_data(df[X_columns], df[y_column])
+    X_train, X_test, y_train, y_test = split_data(df[config_json["DATA_COLUMNS"]["X_COLUMNS"]], df[config_json["DATA_COLUMNS"]["Y_COLUMN"]])
 
     num_columns = [col for col in X_train.columns if X_train[col].dtype in ['float','int']]
     cat_columns = [col for col in X_train.columns if X_train[col].dtype not in ['float','int']]
@@ -69,7 +65,7 @@ def scale_process_data(df, scale='MinMax'):
     X_train[num_columns] = scaler.transform(X_train[num_columns])
     X_test[num_columns] = scaler.transform(X_test[num_columns])
 
-    with open(os.path.join(os.getenv('MODEL_DIR'), 'scaler.pickle'),'wb') as f:
+    with open(os.path.join(config_json['MODEL_DIR'], 'scaler.pickle'),'wb') as f:
             pickle.dump(scaler, f)
     
     print("Тоон хувьсагчдыг scale хийсэн")
@@ -82,7 +78,7 @@ def scale_process_data(df, scale='MinMax'):
         X_test[col] = labelencoder.transform(X_test[col])
         encoder_name = 'labelencoder_'+col+'.pickle'
 
-        with open(os.path.join(os.getenv('MODEL_DIR'), encoder_name),'wb') as f:
+        with open(os.path.join(config_json['MODEL_DIR'], encoder_name),'wb') as f:
             pickle.dump(labelencoder, f)
 
     print("Категори хувьсагчдыг encode хийсэн")
@@ -93,7 +89,7 @@ def scale_process_data(df, scale='MinMax'):
 
     X_train.to_csv(os.path.join(local_data_dir,"X_train.csv"), index=False)
     X_test.to_csv(os.path.join(local_data_dir,"X_test.csv"), index=False)
-    y_train.to_csv(os.path.join(local_data_dir,"y_train.csv"), index=False) 
+    y_train.to_csv(os.path.join(local_data_dir,"y_train.csv"), index=False)
     y_test.to_csv(os.path.join(local_data_dir,"y_test.csv"), index=False)
 
     return X_train, X_test, y_train, y_test
@@ -126,24 +122,17 @@ def train_evaluate_model(model, data):
 
 # загварыг хадгалах
 def save_model(model):
-    with open(os.path.join(os.getenv('MODEL_DIR'), 'model.pickle'), 'wb') as f:
+    with open(os.path.join(config_json['MODEL_DIR'], 'model.pickle'), 'wb') as f:
         pickle.dump(model, f)
     
     print("Сургасан загварыг хадгалав")
 
 
 def main():
-    # Parse command-line arguments
-    parser = argparse.ArgumentParser(description="Train a machine learning model.")
-    parser.add_argument("--max_depth", type=int, default=30, help="The depth of the tree")
-    parser.add_argument("--min_samples_leaf", type=int, default=3, help="Min number of data points in leaf")
-    parser.add_argument("--min_samples_split", type=int, default=3, help="Min number of data points required for split")
-    args = parser.parse_args()
-
     # Hyperparameter-уудыг environment-с авах
-    max_depth = int(os.environ.get("MAX_DEPTH", args.max_depth))
-    min_samples_leaf = int(os.environ.get("MIN_SAMPLES_LEAF", args.min_samples_leaf))
-    min_samples_split = int(os.environ.get("MIN_SAMPLES_SPLIT", args.min_samples_split))
+    max_depth = config_json["MODEL_CONFIG"]["MAX_DEPTH"]
+    min_samples_leaf = config_json["MODEL_CONFIG"]["MIN_SAMPLES_LEAF"]
+    min_samples_split = config_json["MODEL_CONFIG"]["MIN_SAMPLES_SPLIT"]
 
     df = load_spotify_data()
     data = scale_process_data(df, scale='Standard')
