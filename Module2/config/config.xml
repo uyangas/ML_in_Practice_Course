@@ -1,6 +1,6 @@
 <config>
-  <data_dir>./MLData</data_dir>
-  <model_dir>./MLProjects</model_dir>
+  <data_dir>~/MLData</data_dir>
+  <model_dir>~/MLProjects</model_dir>
   <model_config>
     <max_depth>30</max_depth>
     <min_samples_leaf>2</min_samples_leaf>
