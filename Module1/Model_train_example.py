@@ -28,7 +28,7 @@ def split_data(X, y, test_size=0.3):
 
     print("Өгөгдлийг {}% тест, {}% сургалтын гэж хуваасан".format(test_size, 1-test_size))
     print("Сургалтын Х-н хэмжээ: ", X_train.shape, "; y-н хэмжээ: ", y_train.shape)
-    print("Сургалтын Х-н хэмжээ: ", X_test.shape, "; y-н хэмжээ: ", y_test.shape)
+    print("Тестийн Х-н хэмжээ: ", X_test.shape, "; y-н хэмжээ: ", y_test.shape)
 
     return X_train, X_test, y_train, y_test
 
