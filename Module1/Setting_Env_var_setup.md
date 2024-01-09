@@ -11,7 +11,7 @@
     2. `bash` ашиглаж байгаа бол
         - файл байгаа эсэхийг шалгах `find ".bash_profile"`
         - файл-н access хийх эрхийг шалгах `ls -l ~/.bash_profile`
-        - файл-г edit хийх ``nano ~/.bash_profile`
+        - файл-г edit хийх `nano ~/.bash_profile`
         - файл-г уншуулан идэвхижүүлэх `source ~/.bash_profile`
 
 2. Windows дээр ажиллаж байгаа бол
