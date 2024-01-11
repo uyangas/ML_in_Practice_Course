@@ -1,0 +1,7 @@
+*.code-workspace
+*Data
+*.DS_Store
+*__pycache__
+/Scratch.ipynb
+/Module2/Charts
+
