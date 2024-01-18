@@ -4,17 +4,15 @@ import os
 
 class Preprocessing:
 
-    def __init__(self, config, X, y, train_data=True, thresh=70, scale='MinMax'):
+    def __init__(self, config, train_data=True, thresh=70, scale='MinMax'):
         self.config = config
-        self.X = X
-        self.y = y
         self.train_data = train_data
         self.thresh = thresh
         self.scale = scale
 
     def execute(self):
         print(">>> Data Preprocessing started ...")
-
+        self.load_data()
         self.scale_data()
         self.target_category()
 
@@ -31,6 +29,18 @@ class Preprocessing:
         print("-- Өгөгдлийн хэмжээ: ", self.X.shape, "; y-н хэмжээ: ", self.y.shape)
         print("-> Өгөгдөл хадгалагдав")      
 
+
+    def load_data(self):
+        import pandas as pd
+        if self.train_data:
+            self.X = pd.read_csv(os.path.join(self.config['LOCAL_DATA_DIR'], "X_train_orig.csv"))
+            self.y = pd.read_csv(os.path.join(self.config['LOCAL_DATA_DIR'], "y_train_orig.csv"))
+        else:
+            self.X = pd.read_csv(os.path.join(self.config['LOCAL_DATA_DIR'], 'X_test_orig.csv'))
+            self.y = pd.read_csv(os.path.join(self.config['LOCAL_DATA_DIR'], 'y_test_orig.csv'))
+
+        print("-> Өгөгдлийг импортлов")
+        print("-- Өгөгдлийн хэмжээ: ", self.X.shape, "; y-н хэмжээ: ", self.y.shape)
 
     def scale_data(self):
         from sklearn.preprocessing import MinMaxScaler, StandardScaler, LabelEncoder
@@ -60,7 +70,6 @@ class Preprocessing:
         
         print(f"-> Тоон хувьсагчдыг scale хийсэн: `{scaler}`")
 
-
         for col in cat_columns:
             encoder_name = 'labelencoder_'+col+'.pickle'
             if self.train_data:
@@ -77,7 +86,8 @@ class Preprocessing:
         print("-> Категори хувьсагчдыг encode хийсэн: `Label Encoder`")
     
     def target_category(self):
+        import numpy as np
         # таргет хувьсагчийг категори хувьсагч болгох
-        self.y = self.y.map(lambda x: 1 if x>=self.thresh else 0)
+        self.y = self.y['track_popularity'].map(lambda x: 1 if x>=self.thresh else 0)
         
         print(f"-> Таргет хувьсагчийг `Thresh={self.thresh}` байхаар категори хувьсагч болгосон")

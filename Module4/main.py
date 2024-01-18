@@ -1,7 +1,7 @@
 import json
 import os
 
-from load_data import load_data, split_data
+from load_data import LoadSplitData
 from preprocessing import Preprocessing
 from train_eval_model import TrainEvalModel
 
@@ -19,23 +19,21 @@ else:
 
 def main():
 
-    df = load_data(config_json)
-    X_train, X_test, y_train, y_test = split_data(df[config_json['DATA_COLUMNS']['X_COLUMNS']], 
-                                                  df[config_json['DATA_COLUMNS']['Y_COLUMN']])
+    if len(os.listdir(local_data_dir))==0:
 
-    # process train data
-    Preprocessing(config=config_json,
-                  X=X_train,
-                  y=y_train,
-                  train_data=True                 
-                  ).execute()
-    
-    # process test data
-    Preprocessing(config=config_json,
-                  X=X_test,
-                  y=y_test,
-                  train_data=False                 
-                  ).execute()
+        LoadSplitData(config=config_json).execute()
+
+        # process train data
+        Preprocessing(config=config_json,
+                      train_data=True                 
+                      ).execute()
+        
+        # process test data
+        Preprocessing(config=config_json,
+                      train_data=False                 
+                      ).execute()
+    else:
+        print(">>> Өгөгдөл боловсруулагдсан байна")
 
     # Hyperparameter-уудыг environment-с авах
     params={'random_state':123,
@@ -45,12 +43,9 @@ def main():
 
     TrainEvalModel(model_type='RF', 
                    params=params, 
-                   X_train=X_train, 
-                   y_train=y_train, 
                    config=config_json, 
-                   task='Train_eval', 
-                   X_test=X_test, 
-                   y_test=y_test
+                   task='Train_eval',
+                   model_name='model_rf'
                    ).execute()
     
 if __name__ == "__main__":
