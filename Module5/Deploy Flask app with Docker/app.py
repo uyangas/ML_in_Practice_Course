@@ -74,7 +74,7 @@ def predict_data(data):
 
 @app.route("/")
 def home():
-    return render_template('index.html')
+    return render_template('index2.html')
 
 @app.route('/predict', methods = ['POST'])
 def result():
@@ -92,7 +92,7 @@ def result():
         prediction = 'The song is not likely to be popular'
 
     prediction_probability = str(inference[1])+"%"
-    return render_template("result.html", result = prediction, probability=prediction_probability)
+    return render_template("result2.html", result = prediction, probability=prediction_probability)
 
 if __name__ == "__main__":
      app.run(debug=True, host="0.0.0.0", port=5002)

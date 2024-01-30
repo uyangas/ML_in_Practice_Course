@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Model Prediction</title>
+</head>
+<body>
+<div class="center-container" style="max-width: 300px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    <h1 style="color: #007bff; text-align: center;">Song Popularity Prediction</h1>
+    <form action="/predict" method="post", id="singersong">
+        <label for="singer" style="color: #333; display: block; margin-bottom: 5px;">Singer:</label>
+        <input type="text" id="singer" name="singer" required style="width: 95%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc;">
+        <br>
+        <label for="song_name" style="color: #333; display: block; margin-bottom: 5px;">Song name:</label>
+        <input type="text" id="song_name" name="song_name" required style="width: 95%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc;">
+        <br>
+        <button type="submit" onclick="checkValueAndSubmit()" style="background-color: #007bff; color: #fff; padding: 10px 20px; font-size: 16px; border: none; border-radius: 4px; cursor: pointer; width: 100%;">Predict</button>
+    </form>
+</div>
+
+</body>
+</html>
