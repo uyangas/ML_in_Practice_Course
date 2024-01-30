@@ -16,12 +16,12 @@ if not os.path.exists(local_data_dir):
 else:
     pass
 
-
 def main():
 
     if len(os.listdir(local_data_dir))==0:
 
-        LoadSplitData(config=config_json).execute()
+        LoadSplitData(config=config_json
+                      ).execute()
 
         # process train data
         Preprocessing(config=config_json,
