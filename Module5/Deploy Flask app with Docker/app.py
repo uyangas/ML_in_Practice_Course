@@ -14,7 +14,6 @@ app = Flask('songpop')
 def scale_process_data(df):
     selected_cols = []
     X = df[config_json['DATA_COLUMNS']['X_COLUMNS']]
-    y = df[config_json['DATA_COLUMNS']['Y_COLUMN']]
 
     num_columns = [col for col in X.columns if X[col].dtype in ['float','int']]
     cat_columns = [col for col in X.columns if X[col].dtype not in ['float','int']]
