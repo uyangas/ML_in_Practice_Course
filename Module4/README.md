@@ -1,7 +1,7 @@
 # Module ашиглах нь
 
 `Model_train.py`-г дараах модуль болгож өөрчилсөн.
-1. `load_data.py`
-1. `preprocessing.py`
-1. `train_eval_model.py`
-1. `main.py`
+1. `load_data.py` - өгөгдлийг импортлох буюу оруулж ирэх модуль
+1. `preprocessing.py` - өгөгдлийг боловсруулах модуль
+1. `train_eval_model.py` - загварыг сургах, үнэлэх модуль
+1. `main.py` - модуль-уудыг ажиллуулах буюу execute хийх файл
