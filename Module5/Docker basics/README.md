@@ -2,7 +2,7 @@
 
 Docker-н түгээмэл коммандууд
 
-1. `docker build -t <image_name>:<tag>.`
+1. `docker build -t <image_name>:<tag>`
 1. `docker run -dp 8081:5002 -ti --name <container_name> <image_name>:<tag>`
 1. `docker images`
 1. `docker rmi <image_id or image_name>`
